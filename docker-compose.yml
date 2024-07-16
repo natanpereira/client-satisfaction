@@ -1,0 +1,45 @@
+version: '3.8'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: my-mysql-db    
+    restart: always
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"    
+    networks:
+      - app-tier     
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpwd
+      MYSQL_DATABASE: mynestapp
+      MYSQL_USER: nestuser
+      MYSQL_PASSWORD: nestpwd
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  nestjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    networks:
+      - app-tier
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: mynestapp
+      MYSQL_USER: nestuser
+      MYSQL_PASSWORD: nestpwd
+
+volumes:
+  mysql_data:
+    driver: local
