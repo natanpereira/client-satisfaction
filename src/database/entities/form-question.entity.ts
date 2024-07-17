@@ -21,7 +21,7 @@ export class FormQuestion extends AbstractTimestamp {
   @Column({ type: 'varchar', length: 20 })
   type: string;
 
-  @Column({ type: 'tinyint', nullable: true })
+  @Column({ type: 'integer', nullable: true })
   length: number;
 
   @Column({ type: 'boolean' })

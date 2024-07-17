@@ -28,10 +28,10 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   const port = 3000;
-  await app.listen(3000, () =>
-    console.log(
-      `This app is runing on default port: ${port}, manage this on env variables.`,
-    ),
+  await app.listen(port, '0.0.0.0');
+
+  console.log(
+    `This app is runing on default port: ${port}, manage this on env variables.`,
   );
 }
 void bootstrap();

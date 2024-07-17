@@ -23,10 +23,10 @@ export class Form extends AbstractTimestamp {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'date' })
   startDate: Date;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'date' })
   endDate: Date;
 
   @CreateDateColumn()

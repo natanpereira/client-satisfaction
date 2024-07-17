@@ -5,23 +5,22 @@ networks:
     driver: bridge
 
 services:
-  mysql:
-    image: mysql:latest
-    container_name: my-mysql-db
+  postgres:
+    image: postgres:latest
+    container_name: my-postgres-db
     restart: always
     expose:
-      - "3306"
+      - '5432'
     ports:
-      - "3306:3306"
+      - '5432:5432'
     networks:
       - app-tier
     environment:
-      MYSQL_ROOT_PASSWORD: rootpwd
-      MYSQL_DATABASE: mynestapp
-      MYSQL_USER: nestuser
-      MYSQL_PASSWORD: nestpwd
+      POSTGRES_DB: mynestapp
+      POSTGRES_USER: nestuser
+      POSTGRES_PASSWORD: nestpwd
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   nestjs:
     build:
@@ -30,16 +29,19 @@ services:
     ports:
       - '3000:3000'
     depends_on:
-      - mysql
+      - postgres
     networks:
       - app-tier
     environment:
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_DATABASE: mynestapp
-      MYSQL_USER: nestuser
-      MYSQL_PASSWORD: nestpwd
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: mynestapp
+      POSTGRES_USER: nestuser
+      POSTGRES_PASSWORD: nestpwd
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
-  mysql_data:
+  postgres_data:
     driver: local
