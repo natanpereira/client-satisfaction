@@ -1,7 +1,8 @@
 import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
-import { Answers } from '../client-satisfaction/entities/answers.entity';
-import { ClientSatisfaction } from '../client-satisfaction/entities/client-satisfaction.entity';
+import { Answer } from './entities/answer.entity';
+import { FormQuestion } from './entities/form-question.entity';
+import { Form } from './entities/form.entity';
 dotenv.config();
 
 export const databaseProviders = [
@@ -15,7 +16,7 @@ export const databaseProviders = [
         username: process.env.MYSQL_USER,
         password: process.env.MYSQL_PASSWORD,
         database: process.env.MYSQL_DATABASE,
-        entities: [ClientSatisfaction, Answers],
+        entities: [Form, FormQuestion, Answer],
         synchronize: true,
       });
 
