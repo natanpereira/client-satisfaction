@@ -7,6 +7,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Length,
   ValidateNested,
 } from 'class-validator';
 import { TypeEnum } from '../../common/enums/types.enum';
@@ -19,6 +20,7 @@ export class CreateFormQuestionDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(1, 50)
   name: string;
 
   @ApiProperty({
@@ -29,6 +31,7 @@ export class CreateFormQuestionDto {
   })
   @IsNotEmpty()
   @IsEnum(TypeEnum)
+  @Length(1, 20)
   type: string;
 
   @ApiProperty({

@@ -1,83 +1,83 @@
-# NestJS Project with TypeORM and MySQL
+# Projeto NestJS com TypeORM e PostgreSQL
 
-This project is a sample NestJS application that uses TypeORM for database interactions with MySQL. It includes Swagger for API documentation and Docker Compose for containerizing the application and database. Additionally, it features unit tests written with Jest.
+Este projeto é uma aplicação de exemplo NestJS que utiliza o TypeORM para interações com o banco de dados PostgreSQL. Ele inclui Swagger para documentação da API e Docker Compose para containerizar a aplicação e o banco de dados. Além disso, possui testes unitários escritos com Jest.
 
-## Table of Contents
+## Sumário
 
-1. [Installation](#installation)
-2. [Running the Application](#running-the-application)
-3. [Swagger API Documentation](#swagger-api-documentation)
-4. [Docker Setup](#docker-setup)
-5. [Running Unit Tests](#running-unit-tests)
+1. [Instalação](#instalação)
+2. [Executando a Aplicação](#executando-a-aplicação)
+3. [Documentação da API com Swagger](#documentação-da-api-com-swagger)
+4. [Configuração com Docker](#configuração-com-docker)
+5. [Executando Testes Unitários](#executando-testes-unitários)
 
-## Installation
+## Instalação
 
-1. **Clone the repository:**
+1. **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/your-username/your-repo.git
+    git clone https://github.com/natanpereira/client-satisfaction.git
     cd client-satisfaction
     ```
 
-2. **Install dependencies using pnpm:**
+2. **Instale as dependências usando pnpm:**
 
     ```bash
     pnpm install
     ```
 
-3. **Create a `.env` file based on the `.env.example` file and update the necessary environment variables:**
+3. **Crie um arquivo `.env` baseado no arquivo `.env.example` e atualize as variáveis de ambiente necessárias:**
 
     ```bash
     cp .env.example .env
     ```
 
-## Running the Application
+## Executando a Aplicação
 
-1. **Start the application:**
-
-    ```bash
-    pnpm start
-    ```
-
-2. **The application will run on `http://localhost:3000` by default.**
-
-## Swagger API Documentation
-
-1. **Access Swagger UI:**
-
-    Open your browser and navigate to `http://localhost:3000/api`.
-
-2. **Swagger configuration:**
-
-    The Swagger documentation is automatically generated and available at `/api` route.
-
-## Docker Setup
-
-1. **Build and run the application with Docker Compose:**
+1. **Inicie a aplicação:**
 
     ```bash
-    docker-compose up --build
+    pnpm start:dev
     ```
 
-2. **Docker Compose will set up the following services:**
-   - **App:** NestJS application running on port `3000`.
-   - **DB:** MySQL database running on port `3306`.
+2. **A aplicação será executada por padrão em `http://localhost:3000`.**
 
-3. **To stop the services:**
+## Documentação da API com Swagger
+
+1. **Acesse o Swagger UI:**
+
+    Abra seu navegador e acesse `http://localhost:3000/api`.
+
+2. **Configuração do Swagger:**
+
+    A documentação do Swagger é gerada automaticamente e está disponível na rota `/api`.
+
+## Configuração com Docker
+
+1. **Construa e execute a aplicação com Docker Compose:**
+
+    ```bash
+    docker-compose up -d --build
+    ```
+
+2. **O Docker Compose configurará os seguintes serviços:**
+   - **App:** Aplicação NestJS rodando na porta `3000`.
+   - **DB:** Banco de dados PostgreSQL rodando na porta `5432`.
+
+3. **Para parar os serviços:**
 
     ```bash
     docker-compose down
     ```
 
-## Running Unit Tests
+## Executando Testes Unitários
 
-1. **Run tests using Jest:**
+1. **Execute os testes usando Jest:**
 
     ```bash
     pnpm test
     ```
 
-2. **Run tests with coverage report:**
+2. **Execute os testes com relatório de cobertura:**
 
     ```bash
     pnpm test:cov
@@ -85,32 +85,45 @@ This project is a sample NestJS application that uses TypeORM for database inter
 
 ---
 
-## Additional Information
+## Informações Adicionais
 
-### Dependencies
+### Dependências
 
-- **NestJS:** A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
-- **TypeORM:** An ORM that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript.
-- **MySQL:** An open-source relational database management system.
-- **Swagger:** A suite of tools for API developers from Swagger UI to Auto-generate API documentation.
-- **Docker:** A set of platform-as-a-service products that use OS-level virtualization to deliver software in packages called containers.
-- **Jest:** A delightful JavaScript Testing Framework with a focus on simplicity.
+- **NestJS:** Um framework Node.js progressivo para construir aplicações eficientes, confiáveis e escaláveis no lado do servidor.
+- **TypeORM:** Um ORM que pode ser executado em várias plataformas e pode ser usado com TypeScript e JavaScript.
+- **PostgreSQL:** Um sistema de gerenciamento de banco de dados relacional de código aberto.
+- **Swagger:** Um conjunto de ferramentas para desenvolvedores de APIs, desde Swagger UI até a auto-geração de documentação de API.
+- **Docker:** Um conjunto de produtos de plataforma como serviço que utilizam virtualização de nível de sistema operacional para entregar software em pacotes chamados containers.
+- **Jest:** Um framework de testes JavaScript focado em simplicidade.
 
-### Project Structure
+### Estrutura do Projeto
 
-- `src/`: Contains the source code of the application.
-- `test/`: Contains the unit tests for the application.
-- `docker-compose.yml`: Docker Compose configuration file for setting up the application and database containers.
-- `.env`: Environment variables file.
-- `pnpm-lock.yaml`: Lockfile for pnpm package manager.
+- `src/`: Contém o código-fonte da aplicação.
+- `test/`: Contém os testes unitários da aplicação.
+- `docker-compose.yml`: Arquivo de configuração do Docker Compose para configurar os containers da aplicação e do banco de dados.
+- `.env`: Arquivo de variáveis de ambiente.
+- `pnpm-lock.yaml`: Arquivo de lock para o gerenciador de pacotes pnpm.
 
-### Environment Variables
+### Variáveis de Ambiente
 
-Ensure the following environment variables are set in your `.env` file:
+Certifique-se de que as seguintes variáveis de ambiente estejam definidas no seu arquivo `.env`:
 
 ```dotenv
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
-DATABASE_USERNAME=root
-DATABASE_PASSWORD=root
-DATABASE_NAME=test
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=mynestapp
+POSTGRES_USER=nestuser
+POSTGRES_PASSWORD=nestpwd
+
+NESTJS_PORT=3000
+NODE_ENV=dev
+```
+
+## Referências
+
+- [Documentação Oficial do NestJS](https://docs.nestjs.com/)
+- [Documentação do TypeORM](https://typeorm.io/)
+- [Documentação do PostgreSQL](https://www.postgresql.org/docs/)
+- [Documentação do Swagger](https://swagger.io/docs/)
+- [Documentação do Docker](https://docs.docker.com/)
+- [Documentação do Jest](https://jestjs.io/docs/getting-started)

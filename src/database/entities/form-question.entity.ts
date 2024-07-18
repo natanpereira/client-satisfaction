@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { TypeEnum } from '../../common/enums/types.enum';
 import { AbstractTimestamp } from './abstract-timestamp.entity';
 import { Answer } from './answer.entity';
 import { Form } from './form.entity';
@@ -18,7 +19,7 @@ export class FormQuestion extends AbstractTimestamp {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, enum: TypeEnum })
   type: string;
 
   @Column({ type: 'integer', nullable: true })

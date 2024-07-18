@@ -10,15 +10,15 @@ services:
     container_name: my-postgres-db
     restart: always
     expose:
-      - '5432'
+      - '${POSTGRES_PORT}'
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
     networks:
       - app-tier
     environment:
-      POSTGRES_DB: mynestapp
-      POSTGRES_USER: nestuser
-      POSTGRES_PASSWORD: nestpwd
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -27,17 +27,17 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3000:3000'
+      - '${NESTJS_PORT}:${NESTJS_PORT}'
     depends_on:
       - postgres
     networks:
       - app-tier
     environment:
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: mynestapp
-      POSTGRES_USER: nestuser
-      POSTGRES_PASSWORD: nestpwd
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - .:/app
       - /app/node_modules

@@ -1,5 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsISO8601, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsISO8601,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateFormDto {
   @ApiProperty({
@@ -9,6 +15,7 @@ export class CreateFormDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(1, 100)
   title: string;
 
   @ApiProperty({
@@ -18,11 +25,22 @@ export class CreateFormDto {
   })
   @IsNotEmpty()
   @IsString()
+  @Length(1, 255)
   description: string;
 
   @ApiProperty({
+    description: 'The target public of the form',
+    example: 'Desenvolvedor',
+    type: String,
+  })
+  @IsNotEmpty()
+  @IsString()
+  @Length(1, 100)
+  targetPublic: string;
+
+  @ApiProperty({
     description: 'Start date of the form',
-    example: '2022-01-01T00:00:00.000Z',
+    example: '2022-01-01',
     type: Date,
   })
   @IsNotEmpty()
@@ -31,7 +49,7 @@ export class CreateFormDto {
 
   @ApiPropertyOptional({
     description: 'End date of the form',
-    example: '2022-01-01T00:00:00.000Z',
+    example: '2022-01-01',
     type: Date,
   })
   @IsOptional()

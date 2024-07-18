@@ -1,13 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { IAnswerResponse } from '../../common/enums/interfaces/answer.interface';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IAnswerResponse } from '../../common/interfaces/answer.interface';
 import { AbstractTimestamp } from './abstract-timestamp.entity';
 import { Answer } from './answer.entity';
 import { FormQuestion } from './form-question.entity';
@@ -23,20 +15,14 @@ export class Form extends AbstractTimestamp {
   @Column({ type: 'varchar', length: 255 })
   description: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'varchar', length: 100, default: 'public' })
+  targetPublic: string;
+
+  @Column({ type: 'date', default: new Date() })
   startDate: Date;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   endDate: Date;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 
   @OneToMany(() => FormQuestion, (question) => question.form)
   questions: FormQuestion[];

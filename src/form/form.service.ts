@@ -1,7 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { IAnswerResponse } from '../common/enums/interfaces/answer.interface';
+import { IAnswerResponse } from '../common/interfaces/answer.interface';
+import { DefaultQuestions } from '../common/util-question';
 import { Answer } from '../database/entities/answer.entity';
+import { FormQuestion } from '../database/entities/form-question.entity';
 import { Form } from '../database/entities/form.entity';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
@@ -11,17 +13,28 @@ export class FormService {
   constructor(
     @Inject('FORM_REPOSITORY')
     protected formRepository: Repository<Form>,
+    @Inject('FORM_QUESTION_REPOSITORY')
+    protected formQuestionRepository: Repository<FormQuestion>,
   ) {}
   async create(createFormDto: CreateFormDto) {
     const newEntity = this.formRepository.create(createFormDto);
 
     const persistedEntity = await this.formRepository.save(newEntity);
 
+    DefaultQuestions.forEach((question) => {
+      const questionToPersist = this.formQuestionRepository.create({
+        ...question,
+        form: persistedEntity,
+      });
+      this.formQuestionRepository.save(questionToPersist);
+    });
+
     return persistedEntity;
   }
 
   async findAll() {
     const result = await this.formRepository.find({
+      order: { targetPublic: 'ASC' },
       relations: {
         questions: true,
         answers: { formQuestion: true, form: true },
@@ -66,7 +79,7 @@ export class FormService {
 
     await this.formRepository.update(entity.id, updateFormDto);
 
-    return updateFormDto;
+    return { id, ...updateFormDto };
   }
 
   async remove(id: number) {
@@ -87,6 +100,7 @@ export class FormService {
             answer: answer.toString(),
             formId: form.id.toString(),
             form: form.title,
+            targetPublic: form.targetPublic,
             ...rest,
           },
         ];

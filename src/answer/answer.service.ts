@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
-import { IAnswerResponse } from '../common/enums/interfaces/answer.interface';
+import { IAnswerResponse } from '../common/interfaces/answer.interface';
 import { Answer } from '../database/entities/answer.entity';
 import { FormQuestion } from '../database/entities/form-question.entity';
 import { Form } from '../database/entities/form.entity';
@@ -58,6 +58,7 @@ export class AnswerService {
 
   async findAll() {
     const answers = await this.answerRepository.find({
+      order: { form: { targetPublic: 'ASC' } },
       relations: { form: true, formQuestion: true },
     });
     return this.normalizeResponseAnswers(answers);
@@ -172,6 +173,7 @@ export class AnswerService {
             answer: answer.toString(),
             formId: form.id.toString(),
             form: form.title,
+            targetPublic: form.targetPublic,
             ...rest,
           },
         ];

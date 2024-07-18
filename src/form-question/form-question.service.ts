@@ -56,7 +56,7 @@ export class FormQuestionService {
 
     await this.formQuestionRepository.update(entity.id, updateFormQuestionDto);
 
-    return updateFormQuestionDto;
+    return { id, ...updateFormQuestionDto };
   }
 
   async remove(id: number) {
