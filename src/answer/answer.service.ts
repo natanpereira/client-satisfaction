@@ -14,7 +14,6 @@ import {
   CreateAnswerDto,
   CreateArrayAnswersDto,
 } from './dto/create-answer.dto';
-import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @Injectable()
 export class AnswerService {
@@ -74,26 +73,6 @@ export class AnswerService {
       throw new NotFoundException(`Answer with id ${answerId} not found`);
 
     return this.normalizeResponseAnswers(answer);
-  }
-
-  async update(id: number, updateAnswerDto: UpdateAnswerDto) {
-    const entity = await this.answerRepository
-      .findOneByOrFail({
-        id,
-      })
-      .catch(() => {
-        throw new NotFoundException(`Answer with id ${id} not found`);
-      });
-
-    await this.answerRepository.update(entity.id, updateAnswerDto);
-
-    return updateAnswerDto;
-  }
-
-  async remove(id: number) {
-    await this.answerRepository.softDelete(id);
-
-    return { success: true };
   }
 
   private validateAnswers(

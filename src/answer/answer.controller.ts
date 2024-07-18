@@ -1,11 +1,9 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpStatus,
   Param,
-  Patch,
   Post,
   Res,
 } from '@nestjs/common';
@@ -14,7 +12,6 @@ import { FastifyReply } from 'fastify';
 import { AnswerResponse } from '../common/interfaces/answer.interface';
 import { AnswerService } from './answer.service';
 import { CreateArrayAnswersDto } from './dto/create-answer.dto';
-import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @Controller('answer')
 @ApiTags('Answer')
@@ -65,38 +62,6 @@ export class AnswerController {
     @Res() reply: FastifyReply,
   ) {
     const result = await this.answerService.findOne(answerId);
-
-    return reply.status(HttpStatus.OK).send(result);
-  }
-
-  @Patch(':id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: HttpStatus.OK, type: UpdateAnswerDto })
-  @ApiOperation({
-    summary: 'Update an answer',
-    description: 'Update an answer',
-    operationId: 'update',
-  })
-  update(
-    @Param('id') id: string,
-    @Body() updateAnswerDto: UpdateAnswerDto,
-    @Res() reply: FastifyReply,
-  ) {
-    const result = this.answerService.update(+id, updateAnswerDto);
-
-    return reply.status(HttpStatus.OK).send(result);
-  }
-
-  @Delete(':id')
-  @ApiParam({ name: 'id', type: String })
-  @ApiResponse({ status: HttpStatus.OK })
-  @ApiOperation({
-    summary: 'Delete an answer',
-    description: 'Delete an answer',
-    operationId: 'remove',
-  })
-  remove(@Param('id') id: string, @Res() reply: FastifyReply) {
-    const result = this.answerService.remove(+id);
 
     return reply.status(HttpStatus.OK).send(result);
   }
