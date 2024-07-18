@@ -12,9 +12,9 @@ import { UpdateFormDto } from './dto/update-form.dto';
 export class FormService {
   constructor(
     @Inject('FORM_REPOSITORY')
-    protected formRepository: Repository<Form>,
+    public formRepository: Repository<Form>,
     @Inject('FORM_QUESTION_REPOSITORY')
-    protected formQuestionRepository: Repository<FormQuestion>,
+    public formQuestionRepository: Repository<FormQuestion>,
   ) {}
   async create(createFormDto: CreateFormDto) {
     const newEntity = this.formRepository.create(createFormDto);

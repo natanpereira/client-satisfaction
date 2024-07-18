@@ -91,7 +91,7 @@ export class FormController {
     operationId: 'remove',
   })
   async remove(@Param('id') id: string, @Res() reply: FastifyReply) {
-    const result = this.formService.remove(+id);
+    const result = await this.formService.remove(+id);
 
     return reply.status(HttpStatus.OK).send(result);
   }

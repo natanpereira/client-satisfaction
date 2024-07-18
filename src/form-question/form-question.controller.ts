@@ -63,8 +63,8 @@ export class FormQuestionController {
     description: 'Get one question',
     operationId: 'findOne',
   })
-  findOne(@Param('id') id: string, @Res() reply: FastifyReply) {
-    const result = this.formQuestionService.findOne(+id);
+  async findOne(@Param('id') id: string, @Res() reply: FastifyReply) {
+    const result = await this.formQuestionService.findOne(+id);
 
     return reply.status(HttpStatus.OK).send(result);
   }
@@ -98,8 +98,8 @@ export class FormQuestionController {
     description: 'Delete one question',
     operationId: 'remove',
   })
-  remove(@Param('id') id: string, @Res() reply: FastifyReply) {
-    const result = this.formQuestionService.remove(+id);
+  async remove(@Param('id') id: string, @Res() reply: FastifyReply) {
+    const result = await this.formQuestionService.remove(+id);
 
     return reply.status(HttpStatus.OK).send(result);
   }
